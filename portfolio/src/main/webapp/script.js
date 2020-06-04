@@ -17,7 +17,7 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['I plan on joining the millitary after college'];
+      ['I plan on joining the millitary after college', 'I didnt start programming until i got to college'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];

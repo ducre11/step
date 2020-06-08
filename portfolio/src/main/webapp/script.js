@@ -16,13 +16,27 @@
  * Adds a random greeting to the page.
  */
 function addRandomGreeting() {
-  const greetings =
-      ['I plan on joining the millitary after college', 'I didnt start programming until i got to college'];
+  //const greetings =
+    //  ['I plan on joining the millitary after college', 'I didnt start programming until i got to college'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const greetingPromise = fetch("/data");
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  //const greetingContainer = document.getElementById('greeting-container');
+  //greetingContainer.innerText = greeting;
+
+  greetingPromise.then(handleGreeting);
 }
+
+function handleGreeting (response) {
+    const textPromise = response.text();
+    
+    textPromise.then(addGreeting);
+}
+
+function addGreeting (greeting) {
+    const greetingContainer = document.getElementById('greeting-container');
+    greetingContainer.innerHTML = greeting;
+}
+

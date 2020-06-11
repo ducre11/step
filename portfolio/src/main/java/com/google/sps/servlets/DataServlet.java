@@ -14,6 +14,12 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,15 +32,22 @@ import com.google.gson.Gson;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    static ArrayList<String> greetingsArray = new ArrayList<String>();
+    //static ArrayList<String> greetingsArray = new ArrayList<String>();
+    //static ArrayList<String> commentsArray = new ArrayList<String>();
     
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
       String comment = getParameter(request,"text-input", "");
-      greetingsArray.add(comment);
+      
+      
+      Entity commentEntity = new Entity("Comment");
+      commentEntity.setProperty("Comment", comment);
 
-      response.setContentType("text/html;");
-      response.getWriter().println(comment);
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      datastore.put(commentEntity);
+
+      response.sendRedirect("/index.html");
+    
 
   }
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
@@ -47,15 +60,28 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      Query query = new Query("Comment");
+
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      PreparedQuery results = datastore.prepare(query);
+
+    ArrayList<String> commentsArray = new ArrayList<String>();
+      for (Entity entity : results.asIterable()){
+          String comment = (String) entity.getProperty("Comment");
+          commentsArray.add(comment);
+      }
+      
  
-      String json = convertToJsonUsingGson(greetingsArray);
+      //String json = convertToJsonUsingGson(greetingsArray);
+
+      Gson gson = new Gson();
 
       response.setContentType("application/json;");
-      response.getWriter().println(json);
+      response.getWriter().println(gson.toJson(commentsArray));
   }
-  private String convertToJsonUsingGson(ArrayList<String> greetingsArray){
+  /*private String convertToJsonUsingGson(ArrayList<String> greetingsArray){
           Gson gson = new Gson();
           String json = gson.toJson(greetingsArray);
           return json;
-  }
+  }*/
 }

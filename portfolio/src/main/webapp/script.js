@@ -16,20 +16,32 @@
  * Adds a random greeting to the page.
  */
 function addRandomGreeting() {
+    fetch("/data").then(response => response.json()).then((greetingObj) => {
+        const newGreeting = document.getElementById("greeting-container");
+        newGreeting.innerHTML = ' ';
+        newGreeting.appendChild(createListElement(greetingObj));
+    });
+
   //const greetings =
     //  ['I plan on joining the millitary after college', 'I didnt start programming until i got to college'];
 
   // Pick a random greeting.
-  const greetingPromise = fetch("/data");
+  //const greetingPromise = fetch("/data");
 
   // Add it to the page.
   //const greetingContainer = document.getElementById('greeting-container');
   //greetingContainer.innerText = greeting;
 
-  greetingPromise.then(handleGreeting);
+  //greetingPromise.then(handleGreeting);
 }
 
-function handleGreeting (response) {
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
+
+/*function handleGreeting (response) {
     const textPromise = response.text();
     
     textPromise.then(addGreeting);
@@ -38,5 +50,5 @@ function handleGreeting (response) {
 function addGreeting (greeting) {
     const greetingContainer = document.getElementById('greeting-container');
     greetingContainer.innerHTML = greeting;
-}
+}*/
 

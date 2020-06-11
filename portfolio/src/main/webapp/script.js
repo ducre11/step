@@ -21,18 +21,6 @@ function addRandomGreeting() {
         newGreeting.innerHTML = ' ';
         newGreeting.appendChild(createListElement(greetingObj));
     });
-
-  //const greetings =
-    //  ['I plan on joining the millitary after college', 'I didnt start programming until i got to college'];
-
-  // Pick a random greeting.
-  //const greetingPromise = fetch("/data");
-
-  // Add it to the page.
-  //const greetingContainer = document.getElementById('greeting-container');
-  //greetingContainer.innerText = greeting;
-
-  //greetingPromise.then(handleGreeting);
 }
 
 function createListElement(text) {
@@ -41,14 +29,4 @@ function createListElement(text) {
   return liElement;
 }
 
-/*function handleGreeting (response) {
-    const textPromise = response.text();
-    
-    textPromise.then(addGreeting);
-}
-
-function addGreeting (greeting) {
-    const greetingContainer = document.getElementById('greeting-container');
-    greetingContainer.innerHTML = greeting;
-}*/
 

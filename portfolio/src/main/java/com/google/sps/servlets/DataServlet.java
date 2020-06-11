@@ -27,13 +27,23 @@ import com.google.gson.Gson;
 public class DataServlet extends HttpServlet {
 
     static ArrayList<String> greetingsArray = new ArrayList<String>();
-    static {
-        greetingsArray.add("Hi my name is Dominic Ducre");
-        greetingsArray.add("Would you like to be friends");
-        greetingsArray.add("Hello friend");
-    }
     
-    //String greetingsArray[] = {"Hi my name is Dominic Ducre", "Would you like to be friends", "Hello friend"};
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      String comment = getParameter(request,"text-input", "");
+      greetingsArray.add(comment);
+
+      response.setContentType("text/html;");
+      response.getWriter().println(comment);
+
+  }
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
+  }    
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

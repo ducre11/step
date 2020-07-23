@@ -47,8 +47,16 @@
           the most interesting I have gone would be the Botanical Garden in downtown DC. It had tons of interesting, and exotic plants. I also enjoy hiking. Maryland has many hiking trails
           that go through much of the country.  
       </p>
+      <h2>Add a comment:</h2>
+      <form action="/data" method="POST">
+
+        <p>Enter a comment you want saved</p>
+        <textarea name="text-input"></textarea>
+
+        <input type="submit" />
+      </form>
       <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
+      <button onclick="addRandomGreeting()">Greeting</button>
       <div id="greeting-container"></div>
     </div>
   </body>
